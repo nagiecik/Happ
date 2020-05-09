@@ -1,84 +1,250 @@
 import React from "react";
+import styled from "styled-components";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createStackNavigator } from "react-navigation-stack";
-import HomeScreen from "../screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
-import TestScreen from "../screens/Betty";
-import TestoScreen from "../screens/TestoScreen";
+import HomeScreen from "../screens/HomeScreen";
+import DiagnosisScreen from "../screens/DiagnosisScreen";
+import AppointmentsScreen from "../screens/AppointmentsScreen";
+import HelperScreen from "../screens/HelperScreen";
+import CovidScreen from "../screens/CovidScreen";
+import { StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import SplashScreen from "../screens/SplashScreen";
+import SectionScreen from "../screens/SectionScreen";
 
-const activeColor = "#4775f2";
-const inactiveColor = "#b8bece";
+const activeColor = "#FFFFFF";
+const inactiveColor = "#A3B7D8";
 
-const HomeStack = createStackNavigator(
+const SplashStack = createStackNavigator(
   {
+    Splash: SplashScreen,
     Home: HomeScreen,
-    Test: TestScreen,
-    Testo: TestoScreen,
+    Diagnosis: DiagnosisScreen,
+    Appointments: AppointmentsScreen,
+    Helper: HelperScreen,
+    Covid: CovidScreen,
   },
   {
     mode: "modal",
   }
 );
 
-HomeStack.navigationOptions = ({ navigation }) => {
-  let tabBarVisible;
-  if (navigation.state.routes.length > 1) {
-    navigation.state.routes.map((route) => {
-      if (route.routeName === "Test" || route.routeName === "Testo") {
-        tabBarVisible = false;
-      } else {
-        tabBarVisible = true;
-      }
-    });
+SplashStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+
+  let routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  if (routeName == "Splash") {
+    tabBarVisible = false;
   }
 
   return {
     tabBarVisible,
-    tabBarLabel: "Home",
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#ffffff",
+        height: 64,
+      },
+    },
+    tabBarLabel: ({ focused }) => (
+      <Label style={[focused ? styles.tabBarLabelFocused : styles.tabBarLabel]}>
+        Home
+      </Label>
+    ),
     tabBarIcon: ({ focused }) => (
-      <Ionicons
-        name="ios-home"
-        size={26}
-        color={focused ? activeColor : inactiveColor}
-      />
+      <Background style={[focused ? styles.iconBackground : {}]}>
+        <Ionicons
+          name="ios-home"
+          size={focused ? 26 : 24}
+          color={focused ? activeColor : inactiveColor}
+        />
+      </Background>
     ),
   };
 };
 
-const TestStack = createStackNavigator({
-  Test: TestScreen,
+//NAVIGATION HOME
+const HomeStack = createStackNavigator({
+  Home: HomeScreen,
 });
 
-TestStack.navigationOptions = {
-  tabBarLabel: "Test",
+HomeStack.navigationOptions = {
+  tabBarOptions: {
+    style: {
+      backgroundColor: "#ffffff",
+      height: 64,
+    },
+  },
+  tabBarLabel: ({ focused }) => (
+    <Label style={[focused ? styles.tabBarLabelFocused : styles.tabBarLabel]}>
+      Home
+    </Label>
+  ),
   tabBarIcon: ({ focused }) => (
-    <Ionicons
-      name="ios-albums"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-    />
+    <Background style={[focused ? styles.iconBackground : {}]}>
+      <Ionicons
+        name="ios-home"
+        size={focused ? 26 : 24}
+        color={focused ? activeColor : inactiveColor}
+      />
+    </Background>
   ),
 };
 
-const TestoStack = createStackNavigator({
-  Testo: TestoScreen,
+//NAVIGATION DIAGNOSIS
+
+const DiagnosisStack = createStackNavigator({
+  Diagnosis: DiagnosisScreen,
 });
 
-TestoStack.navigationOptions = {
-  tabBarLabel: "Testo",
+DiagnosisStack.navigationOptions = {
+  tabBarOptions: {
+    style: {
+      backgroundColor: "#ffffff",
+      height: 64,
+    },
+  },
+  tabBarLabel: ({ focused }) => (
+    <Label style={[focused ? styles.tabBarLabelFocused : styles.tabBarLabel]}>
+      Diagnosis
+    </Label>
+  ),
   tabBarIcon: ({ focused }) => (
-    <Ionicons
-      name="ios-folder"
-      size={26}
-      color={focused ? activeColor : inactiveColor}
-    />
+    <Background style={[focused ? styles.iconBackground : {}]}>
+      <Ionicons
+        name="ios-thermometer"
+        size={focused ? 26 : 24}
+        color={focused ? activeColor : inactiveColor}
+      />
+    </Background>
+  ),
+};
+
+//NAVIGATION APPOINTMENTS
+
+const AppointmentsStack = createStackNavigator({
+  Appointments: AppointmentsScreen,
+});
+
+AppointmentsStack.navigationOptions = {
+  tabBarOptions: {
+    style: {
+      backgroundColor: "#ffffff",
+      height: 64,
+    },
+  },
+  tabBarLabel: ({ focused }) => (
+    <Label style={[focused ? styles.tabBarLabelFocused : styles.tabBarLabel]}>
+      Appointments
+    </Label>
+  ),
+  tabBarIcon: ({ focused }) => (
+    <Background style={[focused ? styles.iconBackground : {}]}>
+      <Ionicons
+        name="ios-calendar"
+        size={focused ? 26 : 24}
+        color={focused ? activeColor : inactiveColor}
+      />
+    </Background>
+  ),
+};
+
+//NAVIGATION HELPER
+
+const HelperStack = createStackNavigator({
+  Helper: HelperScreen,
+});
+
+HelperStack.navigationOptions = {
+  tabBarOptions: {
+    style: {
+      backgroundColor: "#ffffff",
+      height: 64,
+    },
+  },
+  tabBarLabel: ({ focused }) => (
+    <Label style={[focused ? styles.tabBarLabelFocused : styles.tabBarLabel]}>
+      Helper
+    </Label>
+  ),
+  tabBarIcon: ({ focused }) => (
+    <Background style={[focused ? styles.iconBackground : {}]}>
+      <Ionicons
+        name="ios-help-buoy"
+        size={focused ? 26 : 24}
+        color={focused ? activeColor : inactiveColor}
+      />
+    </Background>
+  ),
+};
+
+//NAVIGATION COVID
+
+const CovidStack = createStackNavigator({
+  Covid: CovidScreen,
+});
+
+CovidStack.navigationOptions = {
+  tabBarOptions: {
+    style: {
+      backgroundColor: "#ffffff",
+      height: 64,
+    },
+  },
+  tabBarLabel: ({ focused }) => (
+    <Label style={[focused ? styles.tabBarLabelFocused : styles.tabBarLabel]}>
+      Covid-19
+    </Label>
+  ),
+  tabBarIcon: ({ focused }) => (
+    <Background style={[focused ? styles.iconBackground : {}]}>
+      <Ionicons
+        name="ios-bug"
+        size={focused ? 26 : 24}
+        color={focused ? activeColor : inactiveColor}
+      />
+    </Background>
   ),
 };
 
 const TabNavigator = createBottomTabNavigator({
-  HomeStack,
-  TestStack,
-  TestoStack,
+  // HomeStack,
+  SplashStack,
+  DiagnosisStack,
+  AppointmentsStack,
+  HelperStack,
+  CovidStack,
+});
+
+const styles = StyleSheet.create({
+  tabBarLabel: {
+    paddingBottom: 10,
+    fontSize: 12,
+    textAlign: "center",
+    color: "#4A72B2",
+    opacity: 0.5,
+  },
+  tabBarLabelFocused: {
+    paddingBottom: 10,
+    fontSize: 12,
+    textAlign: "center",
+    color: "#4A72B2",
+    opacity: 0,
+  },
+  iconBackground: {
+    marginBottom: 37,
+    backgroundColor: "#4A72B2",
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default TabNavigator;
+
+const Label = styled.Text``;
+
+const Background = styled.View``;
